@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Apploud\PackageNamespace\Test;
+namespace Apploud\ErrorMiddleware\Test;
 
 use PHPUnit\Framework\TestCase;
 

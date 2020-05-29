@@ -1,20 +1,27 @@
 {
-	"name": "",
-	"description": "",
+	"name": "apploud/slim-error-middleware",
+	"description": "Extensible error middleware for Slim 4 framework",
 	"license": "MIT",
 	"authors": [
 		{
-			"name": "Your name",
-			"email": "your@email.cc",
+			"name": "Jan Konáš",
+			"email": "jan.konas@apploud.cz",
 			"role": "Developer"
 		}
 	],
 	"require": {
-		"php": ">=7.3"
+		"php": ">=7.3",
+		"ext-json": "*",
+		"psr/http-factory": "^1.0",
+		"psr/http-message": "^1.0",
+		"psr/http-server-handler": "^1.0",
+		"psr/http-server-middleware": "^1.0",
+		"psr/log": "^1.0",
+		"slim/slim": "^4.0"
 	},
 	"autoload": {
 		"psr-4": {
-			"Apploud\\PackageNamespace\\": "src"
+			"Apploud\\ErrorMiddleware\\": "src"
 		}
 	},
 	"require-dev": {
@@ -31,7 +38,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Apploud\\PackageNamespace\\Test\\": "tests"
+			"Apploud\\ErrorMiddleware\\Test\\": "tests"
 		}
 	}
 }
