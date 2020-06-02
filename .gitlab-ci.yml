@@ -2,11 +2,10 @@ stages:
     - build
     - test
 
-image: php:7.3-alpine
+image: registry.gitlab.com/apploud/docker/php-7.2
 
 composer:
     stage: build
-    image: composer:latest
     script:
         - composer install --no-interaction --ansi --prefer-dist --optimize-autoloader --ignore-platform-reqs
     artifacts:
@@ -31,7 +30,6 @@ sniffer:
 
 requirements:
     stage: test
-    image: composer:latest
     before_script:
         - composer global require maglnet/composer-require-checker
     script:

@@ -6,6 +6,7 @@ namespace Apploud\ErrorMiddleware;
 
 use Apploud\ErrorMiddleware\Exception\HttpCodeException;
 use Apploud\ErrorMiddleware\Exception\PublicMessageException;
+use Apploud\ErrorMiddleware\Json\JsonEncoder;
 use JsonSerializable;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -46,7 +47,7 @@ class JsonResponseFactory implements ErrorResponseFactory
 
 	public function createResponse(Throwable $error, ServerRequestInterface $request): ResponseInterface
 	{
-		$body = json_encode(
+		$body = JsonEncoder::encode(
 			$this->getPayload($error, $this->displayErrorDetails, $request),
 			JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION
 		);
