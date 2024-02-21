@@ -82,12 +82,7 @@ class JsonResponseFactory implements ErrorResponseFactory
 		}
 
 		if ($displayErrorDetails) {
-			$payload['exception'] = [];
-
-			do {
-				$payload['exception'][] = $this->formatExceptionFragment($error);
-				$error = $error->getPrevious();
-			} while ($error !== null);
+			$payload['exception'] = $this->formatExceptionFragment($error);
 		}
 
 		return $payload;
@@ -95,16 +90,21 @@ class JsonResponseFactory implements ErrorResponseFactory
 
 
 	/**
-	 * @return array<mixed>
+	 * @return array<mixed>|null
 	 */
-	private function formatExceptionFragment(Throwable $exception): array
+	private function formatExceptionFragment(?Throwable $exception): ?array
 	{
+		if ($exception === null) {
+			return null;
+		}
+
 		return [
 			'type' => $exception::class,
 			'code' => $exception->getCode(),
 			'message' => $exception->getMessage(),
 			'file' => $exception->getFile(),
 			'line' => $exception->getLine(),
+			'previous' => $this->formatExceptionFragment($exception->getPrevious()),
 		];
 	}
 }
