@@ -73,6 +73,7 @@
             <arg value="--extensions=php"/>
             <arg value="--encoding=utf-8"/>
             <arg value="--tab-width=4"/>
+            <arg line="--runtime-set php_version 80000"/>
             <arg value="-sp"/>
             <arg path="src"/>
             <arg path="tests"/>
@@ -90,6 +91,7 @@
             <arg value="--extensions=php,phpt"/>
             <arg value="--encoding=utf-8"/>
             <arg value="--tab-width=4"/>
+            <arg line="--runtime-set php_version 80000"/>
             <arg value="-sp"/>
             <arg path="src"/>
             <arg path="tests"/>

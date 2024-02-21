@@ -8,34 +8,29 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use Slim\Error\Renderers\PlainTextErrorRenderer;
 use Slim\Interfaces\ErrorRendererInterface;
 use Throwable;
 
 class ErrorMiddleware implements MiddlewareInterface
 {
-	/** @var ErrorResponseFactory */
-	private $defaultResponseFactory;
+	private ErrorResponseFactory $defaultResponseFactory;
 
 	/** @var array<class-string, ErrorResponseFactory> */
-	private $responseFactories = [];
+	private array $responseFactories = [];
 
-	/** @var LoggerInterface|null */
-	private $logger;
+	private ?LoggerInterface $logger = null;
 
-	/** @var string */
-	private $defaultLogLevel;
+	private string $defaultLogLevel;
 
 	/** @var array<class-string, string> */
-	private $logLevels = [];
+	private array $logLevels = [];
 
-	/** @var ErrorRendererInterface */
-	private $logErrorRenderer;
+	private ErrorRendererInterface $logErrorRenderer;
 
-	/** @var bool */
-	private $logErrorDetails;
+	private bool $logErrorDetails;
 
 
 	public function __construct(
@@ -44,8 +39,7 @@ class ErrorMiddleware implements MiddlewareInterface
 		string $defaultLogLevel = LogLevel::ERROR,
 		?ErrorRendererInterface $logErrorRenderer = null,
 		bool $logErrorDetails = true
-	)
-	{
+	) {
 		$this->defaultResponseFactory = $defaultResponseFactory;
 		$this->logger = $logger;
 		$this->defaultLogLevel = $defaultLogLevel;

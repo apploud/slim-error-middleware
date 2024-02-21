@@ -1,44 +1,82 @@
 stages:
-    - build
     - test
-
-image: registry.gitlab.com/apploud/docker/php-7.2
-
-composer:
-    stage: build
-    script:
-        - composer install --no-interaction --ansi --prefer-dist --optimize-autoloader --ignore-platform-reqs
-    artifacts:
-        paths:
-            - vendor/
-        expire_in: 24h
 
 lint:
     stage: test
+    image: $PHP_IMAGE:latest
+    before_script:
+        - composer update --no-interaction --ansi --prefer-dist
     script:
         - vendor/bin/phing lint
-
-phpstan:
-    stage: test
-    script:
-        - vendor/bin/phing stan
-
-sniffer:
-    stage: test
-    script:
-        - vendor/bin/phing sniffer
+    parallel:
+        matrix:
+            -
+                PHP_IMAGE:
+                    - registry.gitlab.com/apploud/docker/php-8.0
+                    - registry.gitlab.com/apploud/docker/php-8.2
 
 requirements:
     stage: test
+    image: $PHP_IMAGE:latest
     before_script:
         - composer global require maglnet/composer-require-checker
+        - composer update --no-interaction --ansi --prefer-dist
     script:
         - vendor/bin/phing reqs
+    parallel:
+        matrix:
+            -
+                PHP_IMAGE:
+                    - registry.gitlab.com/apploud/docker/php-8.0
+                    - registry.gitlab.com/apploud/docker/php-8.1
+                    - registry.gitlab.com/apploud/docker/php-8.2
+                COMPOSER_ARGS:
+                    - ''
+                    - '--prefer-lowest'
+
+phpstan:
+    stage: test
+    image: $PHP_IMAGE:latest
+    before_script:
+        - composer update --no-interaction --ansi --prefer-dist $COMPOSER_ARGS
+    script:
+        - vendor/bin/phing stan
+    parallel:
+        matrix:
+            -
+                PHP_IMAGE:
+                    - registry.gitlab.com/apploud/docker/php-8.0
+                    - registry.gitlab.com/apploud/docker/php-8.1
+                    - registry.gitlab.com/apploud/docker/php-8.2
+                COMPOSER_ARGS:
+                    - ''
+                    - '--prefer-lowest'
+
+sniffer:
+    stage: test
+    image: registry.gitlab.com/apploud/docker/php-8.2:latest
+    before_script:
+        - composer update --no-interaction --ansi --prefer-dist $COMPOSER_ARGS
+    script:
+        - vendor/bin/phing sniffer
 
 tests:
     stage: test
+    image: $PHP_IMAGE:latest
+    before_script:
+        - composer update --no-interaction --ansi --prefer-dist $COMPOSER_ARGS
     script:
         - vendor/bin/phing tests
+    parallel:
+        matrix:
+            -
+                PHP_IMAGE:
+                    - registry.gitlab.com/apploud/docker/php-8.0
+                    - registry.gitlab.com/apploud/docker/php-8.1
+                    - registry.gitlab.com/apploud/docker/php-8.2
+                COMPOSER_ARGS:
+                    - ''
+                    - '--prefer-lowest'
     artifacts:
         paths:
             - log/

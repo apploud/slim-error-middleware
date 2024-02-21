@@ -1,30 +1,39 @@
 <?xml version="1.0"?>
 <ruleset name="ApploudPackage">
 	<rule ref="PSR2">
-		<exclude name="Generic.WhiteSpace.DisallowTabIndent.TabsUsed" />
+		<exclude name="Generic.WhiteSpace.DisallowTabIndent" />
 		<exclude name="Generic.Commenting.Todo.TaskFound" />
 		<exclude name="Generic.Commenting.Todo.CommentFound" />
 		<exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody" />
 		<exclude name="Squiz.Commenting.FunctionComment.MissingParamTag" />
+		<exclude name="Squiz.Commenting.FunctionComment.ParamNameNoMatch" />
 		<exclude name="Squiz.WhiteSpace.FunctionSpacing" />
 		<exclude name="Squiz.WhiteSpace.MemberVarSpacing" />
 		<exclude name="Generic.Files.LineLength.TooLong" />
 	</rule>
-	<rule ref="vendor/consistence/coding-standard/Consistence/ruleset.xml">
-		<exclude name="Consistence.Exceptions.ExceptionDeclaration" />
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="indent" value="4"/>
+			<property name="tabIndent" value="true" />
+		</properties>
 	</rule>
 	<rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
-		<exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint" /> <!-- Remove if PHP 7.4+ is required -->
-		<exclude name="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator" /> <!-- Remove if PHP 7.4+ is required -->
-		<exclude name="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator" /> <!-- Remove if PHP 7.4+ is required -->
 		<exclude name="SlevomatCodingStandard.Functions.RequireArrowFunction" />
-		<exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall" />
+		<exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall" />
+		<exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration" />
+		<exclude name="SlevomatCodingStandard.Functions.DisallowNamedArguments" />
+		<exclude name="SlevomatCodingStandard.Functions.FunctionLength" />
+		<exclude name="SlevomatCodingStandard.Files.FunctionLength" />
+		<exclude name="SlevomatCodingStandard.Files.FileLength" />
 		<exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming" />
 		<exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming" />
 		<exclude name="SlevomatCodingStandard.Classes.SuperfluousTraitNaming" />
+		<exclude name="SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion" />
+		<exclude name="SlevomatCodingStandard.Classes.ForbiddenPublicProperty" />
+		<exclude name="SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal" />
 		<exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces.NonFullyQualified" />
 		<exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions.NonFullyQualifiedException" />
-		<exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword" />
 		<exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation.NonFullyQualifiedClassName" />
 		<exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions.NonFullyQualified" />
 		<exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants.NonFullyQualified" />
@@ -32,14 +41,31 @@
 		<exclude name="SlevomatCodingStandard.ControlStructures.RequireYodaComparison.RequiredYodaComparison" />
 		<exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator" />
 		<exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator" />
+		<exclude name="SlevomatCodingStandard.ControlStructures.DisallowNullSafeObjectOperator" />
+		<exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators.DisallowedPostIncrementOperator" />
+		<exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators.DisallowedPostDecrementOperator" />
 		<exclude name="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment" />
 		<exclude name="SlevomatCodingStandard.Commenting.RequireOneLineDocComment" />
+		<exclude name="SlevomatCodingStandard.Commenting.DisallowCommentAfterCode.DisallowedCommentAfterCode" />
 		<exclude name="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint" />
+		<exclude name="SlevomatCodingStandard.Classes.ParentCallSpacing" />
+		<exclude name="SlevomatCodingStandard.Classes.ClassLength" />
+		<exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing" />
+		<exclude name="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing" />
+		<exclude name="SlevomatCodingStandard.Exceptions.DisallowNonCapturingCatch" />
+		<exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion" />
+		<exclude name="SlevomatCodingStandard.PHP.DisallowReference" />
+		<exclude name="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable" />
+		<exclude name="SlevomatCodingStandard.Complexity.Cognitive" />
+		<exclude name="SlevomatCodingStandard.Attributes.AttributesOrder" />
+		<exclude name="SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys" />
+		<exclude name="SlevomatCodingStandard.Numbers.DisallowNumericLiteralSeparator" />
 	</rule>
 	<rule ref="SlevomatCodingStandard.Classes.ClassStructure">
 		<properties>
 			<property name="groups" type="array">
 				<element value="uses"/>
+				<element value="enum cases"/>
 				<element value="public constants"/>
 				<element value="protected constants"/>
 				<element value="private constants"/>
@@ -56,10 +82,14 @@
 				<element value="public abstract methods"/>
 				<element value="public static methods"/>
 				<element value="public methods"/>
+				<element value="public static final methods"/>
+				<element value="public final methods"/>
 				<element value="protected static abstract methods"/>
 				<element value="protected abstract methods"/>
 				<element value="protected static methods"/>
 				<element value="protected methods"/>
+				<element value="protected static final methods"/>
+				<element value="protected final methods"/>
 				<element value="private static methods"/>
 				<element value="private methods"/>
 				<element value="magic methods"/>
@@ -93,6 +123,15 @@
 			<property name="maxLinesCountBeforeWithoutComment" value="1"/>
 		</properties>
 	</rule>
+	<rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing">
+		<properties>
+			<property name="linesCountBeforeFirstUse" value="2"/>
+			<property name="linesCountBeforeFirstUseWhenFirstInClass" value="0"/>
+			<property name="linesCountBetweenUses" value="0"/>
+			<property name="linesCountAfterLastUse" value="2"/>
+			<property name="linesCountAfterLastUseWhenLastInClass" value="0"/>
+		</properties>
+	</rule>
 	<rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature">
 		<properties>
 			<property name="minLineLength" value="160"/>
@@ -101,6 +140,33 @@
 	<rule ref="SlevomatCodingStandard.Classes.RequireSingleLineMethodSignature">
 		<properties>
 			<property name="maxLineLength" value="120"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Functions.RequireMultiLineCall">
+		<properties>
+			<property name="minLineLength" value="160"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Functions.RequireSingleLineCall">
+		<properties>
+			<property name="maxLineLength" value="120"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireMultiLineCondition">
+		<properties>
+			<property name="minLineLength" value="160"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition">
+		<properties>
+			<property name="maxLineLength" value="120"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit">
+		<properties>
+			<property name="ignoreStandaloneIfInScope" value="true"/>
+			<property name="ignoreOneLineTrailingIf" value="true"/>
+			<property name="ignoreTrailingIfWithOneInstruction" value="true"/>
 		</properties>
 	</rule>
 	<rule ref="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces">
@@ -114,6 +180,11 @@
 			<property name="lineLengthLimit" value="160"/>
 		</properties>
 	</rule>
+	<rule ref="SlevomatCodingStandard.Variables.UnusedVariable">
+		<properties>
+			<property name="ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach" value="true"/>
+		</properties>
+	</rule>
 	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
 		<properties>
 			<property name="searchAnnotations" value="true"/>
@@ -125,6 +196,23 @@
 				src => Apploud\ErrorMiddleware,
 				tests => Apploud\ErrorMiddleware\Test,
 			"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.PHP.ForbiddenClasses">
+		<properties>
+			<property name="forbiddenClasses" type="array">
+				<element key="Nette\Security\User" value="App\Security\FrontUserStorage"/>
+				<element key="DateTime" value="Apploud\DateTime\ImmutableDateTime"/>
+				<element key="DateTimeImmutable" value="Apploud\DateTime\ImmutableDateTime"/>
+				<element key="Nette\Utils\DateTime" value="Apploud\DateTime\ImmutableDateTime"/>
+				<element key="Nette\Utils\Random" value="Apploud\RandomGenerator\RandomGenerator"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator">
+		<properties>
+			<property name="minDigitsBeforeDecimalPoint" value="6"/>
+			<property name="minDigitsAfterDecimalPoint" value="6"/>
 		</properties>
 	</rule>
 </ruleset>

@@ -13,22 +13,18 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpException;
 use Slim\Exception\HttpMethodNotAllowedException;
-use Throwable;
 use stdClass;
+use Throwable;
 
 class JsonResponseFactory implements ErrorResponseFactory
 {
-	/** @var ResponseFactoryInterface */
-	private $responseFactory;
+	private ResponseFactoryInterface $responseFactory;
 
-	/** @var bool */
-	private $displayErrorDetails;
+	private bool $displayErrorDetails;
 
-	/** @var string */
-	private $defaultMessage;
+	private string $defaultMessage;
 
-	/** @var int */
-	private $defaultHttpCode;
+	private int $defaultHttpCode;
 
 
 	public function __construct(
@@ -36,8 +32,7 @@ class JsonResponseFactory implements ErrorResponseFactory
 		bool $displayErrorDetails,
 		string $defaultMessage = 'Server Error',
 		int $defaultHttpCode = 500
-	)
-	{
+	) {
 		$this->responseFactory = $responseFactory;
 		$this->displayErrorDetails = $displayErrorDetails;
 		$this->defaultMessage = $defaultMessage;
@@ -72,7 +67,7 @@ class JsonResponseFactory implements ErrorResponseFactory
 	 * @return JsonSerializable|stdClass|array<mixed>
 	 * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 	 */
-	protected function getPayload(Throwable $error, bool $displayErrorDetails, ServerRequestInterface $request)
+	protected function getPayload(Throwable $error, bool $displayErrorDetails, ServerRequestInterface $request): JsonSerializable|stdClass|array
 	{
 		$payload = [
 			'message' => $this->defaultMessage,
@@ -90,7 +85,7 @@ class JsonResponseFactory implements ErrorResponseFactory
 			$payload['exception'] = [];
 
 			do {
-				$error['exception'][] = $this->formatExceptionFragment($error);
+				$payload['exception'][] = $this->formatExceptionFragment($error);
 				$error = $error->getPrevious();
 			} while ($error !== null);
 		}
@@ -105,7 +100,7 @@ class JsonResponseFactory implements ErrorResponseFactory
 	private function formatExceptionFragment(Throwable $exception): array
 	{
 		return [
-			'type' => get_class($exception),
+			'type' => $exception::class,
 			'code' => $exception->getCode(),
 			'message' => $exception->getMessage(),
 			'file' => $exception->getFile(),
