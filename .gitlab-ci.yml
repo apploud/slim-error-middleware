@@ -12,8 +12,8 @@ lint:
         matrix:
             -
                 PHP_IMAGE:
-                    - registry.gitlab.com/apploud/docker/php-8.0
-                    - registry.gitlab.com/apploud/docker/php-8.2
+                    - registry.gitlab.com/apploud/images/php/8.0-bin
+                    - registry.gitlab.com/apploud/images/php/8.2-bin
 
 requirements:
     stage: test
@@ -27,9 +27,9 @@ requirements:
         matrix:
             -
                 PHP_IMAGE:
-                    - registry.gitlab.com/apploud/docker/php-8.0
-                    - registry.gitlab.com/apploud/docker/php-8.1
-                    - registry.gitlab.com/apploud/docker/php-8.2
+                    - registry.gitlab.com/apploud/images/php/8.0-bin
+                    - registry.gitlab.com/apploud/images/php/8.1-bin
+                    - registry.gitlab.com/apploud/images/php/8.2-bin
                 COMPOSER_ARGS:
                     - ''
                     - '--prefer-lowest'
@@ -45,16 +45,16 @@ phpstan:
         matrix:
             -
                 PHP_IMAGE:
-                    - registry.gitlab.com/apploud/docker/php-8.0
-                    - registry.gitlab.com/apploud/docker/php-8.1
-                    - registry.gitlab.com/apploud/docker/php-8.2
+                    - registry.gitlab.com/apploud/images/php/8.0-bin
+                    - registry.gitlab.com/apploud/images/php/8.1-bin
+                    - registry.gitlab.com/apploud/images/php/8.2-bin
                 COMPOSER_ARGS:
                     - ''
                     - '--prefer-lowest'
 
 sniffer:
     stage: test
-    image: registry.gitlab.com/apploud/docker/php-8.2:latest
+    image: registry.gitlab.com/apploud/images/php/8.2-bin:latest
     before_script:
         - composer update --no-interaction --ansi --prefer-dist $COMPOSER_ARGS
     script:
@@ -71,9 +71,9 @@ tests:
         matrix:
             -
                 PHP_IMAGE:
-                    - registry.gitlab.com/apploud/docker/php-8.0
-                    - registry.gitlab.com/apploud/docker/php-8.1
-                    - registry.gitlab.com/apploud/docker/php-8.2
+                    - registry.gitlab.com/apploud/images/php/8.0-bin
+                    - registry.gitlab.com/apploud/images/php/8.1-bin
+                    - registry.gitlab.com/apploud/images/php/8.2-bin
                 COMPOSER_ARGS:
                     - ''
                     - '--prefer-lowest'
