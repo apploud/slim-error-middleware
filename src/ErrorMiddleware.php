@@ -56,16 +56,16 @@ class ErrorMiddleware implements MiddlewareInterface
 	{
 		try {
 			return $handler->handle($request);
-		} catch (Throwable $e) {
-			$this->log($e);
+		} catch (Throwable $error) {
+			$this->log($error);
 
 			foreach ($this->responseFactories as $class => $responseFactory) {
-				if ($e instanceof $class) {
-					return $responseFactory->createResponse($e, $request);
+				if ($error instanceof $class) {
+					return $responseFactory->createResponse($error, $request);
 				}
 			}
 
-			return $this->defaultResponseFactory->createResponse($e, $request);
+			return $this->defaultResponseFactory->createResponse($error, $request);
 		}
 	}
 
