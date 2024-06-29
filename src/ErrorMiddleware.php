@@ -4,14 +4,14 @@ declare(strict_types = 1);
 
 namespace Apploud\ErrorMiddleware;
 
+use Apploud\ErrorMiddleware\Log\LogMessageGetter;
+use Apploud\ErrorMiddleware\Log\PlaintextLogMessageGetter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Slim\Error\Renderers\PlainTextErrorRenderer;
-use Slim\Interfaces\ErrorRendererInterface;
 use Throwable;
 
 class ErrorMiddleware implements MiddlewareInterface
@@ -28,28 +28,27 @@ class ErrorMiddleware implements MiddlewareInterface
 	/** @var array<class-string, string> */
 	private array $logLevels = [];
 
-	private ErrorRendererInterface $logErrorRenderer;
+	private LogMessageGetter $defaultLogMessageGetter;
 
-	private bool $logErrorDetails;
+	/** @var array<class-string, LogMessageGetter> */
+	private array $logMessageGetters = [];
 
 
 	public function __construct(
 		ErrorResponseFactory $defaultResponseFactory,
 		?LoggerInterface $logger = null,
 		string $defaultLogLevel = LogLevel::ERROR,
-		?ErrorRendererInterface $logErrorRenderer = null,
-		bool $logErrorDetails = true
+		?LogMessageGetter $defaultLogMessageGetter = null
 	) {
 		$this->defaultResponseFactory = $defaultResponseFactory;
 		$this->logger = $logger;
 		$this->defaultLogLevel = $defaultLogLevel;
 
-		if ($logErrorRenderer === null) {
-			$logErrorRenderer = new PlainTextErrorRenderer();
+		if ($defaultLogMessageGetter === null) {
+			$defaultLogMessageGetter = new PlaintextLogMessageGetter();
 		}
 
-		$this->logErrorRenderer = $logErrorRenderer;
-		$this->logErrorDetails = $logErrorDetails;
+		$this->defaultLogMessageGetter = $defaultLogMessageGetter;
 	}
 
 
@@ -89,6 +88,15 @@ class ErrorMiddleware implements MiddlewareInterface
 	}
 
 
+	/**
+	 * @phpstan-param class-string $throwableClass
+	 */
+	public function addLogMessageGetter(string $throwableClass, LogMessageGetter $logMessageGetter): void
+	{
+		$this->logMessageGetters = [$throwableClass => $logMessageGetter] + $this->logMessageGetters;
+	}
+
+
 	private function log(Throwable $error): void
 	{
 		if ($this->logger === null) {
@@ -105,7 +113,14 @@ class ErrorMiddleware implements MiddlewareInterface
 			}
 		}
 
-		$logErrorRenderer = $this->logErrorRenderer;
-		$this->logger->log($logLevel, $logErrorRenderer($error, $this->logErrorDetails), ['exception' => $error]);
+		$logMessageGetter = $this->defaultLogMessageGetter;
+		foreach ($this->logMessageGetters as $class => $messageGetter) {
+			if ($error instanceof $class) {
+				$logMessageGetter = $messageGetter;
+				break;
+			}
+		}
+
+		$this->logger->log($logLevel, $logMessageGetter->getLogMessage($error), ['exception' => $error]);
 	}
 }
