@@ -7,7 +7,7 @@ lint:
     before_script:
         - composer update --no-interaction --ansi --prefer-dist
     script:
-        - vendor/bin/phing lint
+        - composer lint
     parallel:
         matrix:
             -
@@ -22,7 +22,7 @@ requirements:
         - composer global require maglnet/composer-require-checker
         - composer update --no-interaction --ansi --prefer-dist
     script:
-        - vendor/bin/phing reqs
+        - composer reqs
     parallel:
         matrix:
             -
@@ -41,7 +41,7 @@ phpstan:
     before_script:
         - composer update --no-interaction --ansi --prefer-dist $COMPOSER_ARGS
     script:
-        - vendor/bin/phing stan
+        - composer stan
     parallel:
         matrix:
             -
@@ -60,7 +60,7 @@ sniffer:
     before_script:
         - composer update --no-interaction --ansi --prefer-dist $COMPOSER_ARGS
     script:
-        - vendor/bin/phing sniffer
+        - composer sniffer
 
 tests:
     stage: test
@@ -68,7 +68,7 @@ tests:
     before_script:
         - composer update --no-interaction --ansi --prefer-dist $COMPOSER_ARGS
     script:
-        - vendor/bin/phing tests
+        - composer tests
     parallel:
         matrix:
             -
