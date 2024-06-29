@@ -24,7 +24,6 @@
 		<exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration" />
 		<exclude name="SlevomatCodingStandard.Functions.DisallowNamedArguments" />
 		<exclude name="SlevomatCodingStandard.Functions.FunctionLength" />
-		<exclude name="SlevomatCodingStandard.Files.FunctionLength" />
 		<exclude name="SlevomatCodingStandard.Files.FileLength" />
 		<exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming" />
 		<exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming" />
