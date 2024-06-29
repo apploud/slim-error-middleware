@@ -22,10 +22,7 @@
 	"autoload": {
 		"psr-4": {
 			"Apploud\\ErrorMiddleware\\": "src"
-		},
-		"files": [
-			"src/Json/polyfill.php"
-		]
+		}
 	},
 	"require-dev": {
 		"roave/security-advisories": "dev-latest",
