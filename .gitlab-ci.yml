@@ -12,7 +12,7 @@ lint:
         matrix:
             -
                 PHP_IMAGE:
-                    - registry.gitlab.com/apploud/images/php/8.0-bin
+                    - registry.gitlab.com/apploud/images/php/8.1-bin
                     - registry.gitlab.com/apploud/images/php/8.3-bin
 
 requirements:
@@ -27,7 +27,6 @@ requirements:
         matrix:
             -
                 PHP_IMAGE:
-                    - registry.gitlab.com/apploud/images/php/8.0-bin
                     - registry.gitlab.com/apploud/images/php/8.1-bin
                     - registry.gitlab.com/apploud/images/php/8.2-bin
                     - registry.gitlab.com/apploud/images/php/8.3-bin
@@ -46,7 +45,6 @@ phpstan:
         matrix:
             -
                 PHP_IMAGE:
-                    - registry.gitlab.com/apploud/images/php/8.0-bin
                     - registry.gitlab.com/apploud/images/php/8.1-bin
                     - registry.gitlab.com/apploud/images/php/8.2-bin
                     - registry.gitlab.com/apploud/images/php/8.3-bin
@@ -73,7 +71,6 @@ tests:
         matrix:
             -
                 PHP_IMAGE:
-                    - registry.gitlab.com/apploud/images/php/8.0-bin
                     - registry.gitlab.com/apploud/images/php/8.1-bin
                     - registry.gitlab.com/apploud/images/php/8.2-bin
                     - registry.gitlab.com/apploud/images/php/8.3-bin

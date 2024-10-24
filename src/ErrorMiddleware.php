@@ -6,6 +6,7 @@ namespace Apploud\ErrorMiddleware;
 
 use Apploud\ErrorMiddleware\Log\LogMessageGetter;
 use Apploud\ErrorMiddleware\Log\PlaintextLogMessageGetter;
+use Apploud\Logger\Record\LogRecordUuidProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -59,13 +60,18 @@ class ErrorMiddleware implements MiddlewareInterface
 		} catch (Throwable $error) {
 			$this->log($error);
 
+			$logRecordId = null;
+			if ($this->logger instanceof LogRecordUuidProvider) {
+				$logRecordId = $this->logger->getLastRecordUuid();
+			}
+
 			foreach ($this->responseFactories as $class => $responseFactory) {
 				if ($error instanceof $class) {
-					return $responseFactory->createResponse($error, $request);
+					return $responseFactory->createResponse($error, $request, $logRecordId);
 				}
 			}
 
-			return $this->defaultResponseFactory->createResponse($error, $request);
+			return $this->defaultResponseFactory->createResponse($error, $request, $logRecordId);
 		}
 	}
 

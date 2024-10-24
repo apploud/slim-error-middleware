@@ -19,13 +19,13 @@ class JsonResponseFactoryTest extends TestCase
 		$request = Mockery::mock(ServerRequestInterface::class);
 
 		$responseFactory = new JsonResponseFactory(new ResponseFactory(), false);
-		$response = $responseFactory->createResponse(new Exception('test'), $request);
+		$response = $responseFactory->createResponse(new Exception('test'), $request, '340b089718ec9181a0af');
 
 		self::assertSame(500, $response->getStatusCode());
 		self::assertSame('application/json', $response->getHeaderLine('Content-type'));
 
 		$body = json_encode(
-			['message' => 'Server Error'],
+			['message' => 'Server Error', 'errorId' => '340b089718ec9181a0af'],
 			JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION
 		);
 		self::assertSame($body, (string) $response->getBody());
@@ -39,7 +39,7 @@ class JsonResponseFactoryTest extends TestCase
 
 		$previous = new RuntimeException('origin');
 		$lineBetweenExceptions = __LINE__;
-		$response = $responseFactory->createResponse(new RuntimeException('test', 1, $previous), $request);
+		$response = $responseFactory->createResponse(new RuntimeException('test', 1, $previous), $request, '340b089718ec9181a0af');
 
 		self::assertSame(500, $response->getStatusCode());
 		self::assertSame('application/json', $response->getHeaderLine('Content-type'));
@@ -62,6 +62,7 @@ class JsonResponseFactoryTest extends TestCase
 						'previous' => null,
 					],
 				],
+				'errorId' => '340b089718ec9181a0af',
 			],
 			JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION
 		);

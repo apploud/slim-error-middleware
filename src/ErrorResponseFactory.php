@@ -10,5 +10,5 @@ use Throwable;
 
 interface ErrorResponseFactory
 {
-	public function createResponse(Throwable $error, ServerRequestInterface $request): ResponseInterface;
+	public function createResponse(Throwable $error, ServerRequestInterface $request, ?string $logRecordId): ResponseInterface;
 }

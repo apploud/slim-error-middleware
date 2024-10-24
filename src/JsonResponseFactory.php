@@ -40,10 +40,10 @@ class JsonResponseFactory implements ErrorResponseFactory
 	}
 
 
-	public function createResponse(Throwable $error, ServerRequestInterface $request): ResponseInterface
+	public function createResponse(Throwable $error, ServerRequestInterface $request, ?string $logRecordId): ResponseInterface
 	{
 		$body = JsonEncoder::encode(
-			$this->getPayload($error, $this->displayErrorDetails, $request),
+			$this->getPayload($error, $this->displayErrorDetails, $request, $logRecordId),
 			JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION
 		);
 
@@ -67,8 +67,12 @@ class JsonResponseFactory implements ErrorResponseFactory
 	 * @return JsonSerializable|stdClass|array<mixed>
 	 * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 	 */
-	protected function getPayload(Throwable $error, bool $displayErrorDetails, ServerRequestInterface $request): JsonSerializable|stdClass|array
-	{
+	protected function getPayload(
+		Throwable $error,
+		bool $displayErrorDetails,
+		ServerRequestInterface $request,
+		?string $logRecordId = null
+	): JsonSerializable|stdClass|array {
 		$payload = [
 			'message' => $this->defaultMessage,
 		];
@@ -83,6 +87,10 @@ class JsonResponseFactory implements ErrorResponseFactory
 
 		if ($displayErrorDetails) {
 			$payload['exception'] = $this->formatExceptionFragment($error);
+		}
+
+		if ($logRecordId !== null) {
+			$payload['errorId'] = $logRecordId;
 		}
 
 		return $payload;
