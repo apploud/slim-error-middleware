@@ -25,7 +25,7 @@ class JsonResponseFactoryTest extends TestCase
 		self::assertSame('application/json', $response->getHeaderLine('Content-type'));
 
 		$body = json_encode(
-			['message' => 'Server Error', 'errorId' => '340b089718ec9181a0af'],
+			['message' => 'Server Error', 'applicationErrorId' => '340b089718ec9181a0af'],
 			JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION
 		);
 		self::assertSame($body, (string) $response->getBody());
@@ -62,7 +62,7 @@ class JsonResponseFactoryTest extends TestCase
 						'previous' => null,
 					],
 				],
-				'errorId' => '340b089718ec9181a0af',
+				'applicationErrorId' => '340b089718ec9181a0af',
 			],
 			JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION
 		);

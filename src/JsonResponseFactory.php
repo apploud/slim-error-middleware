@@ -90,7 +90,7 @@ class JsonResponseFactory implements ErrorResponseFactory
 		}
 
 		if ($logRecordId !== null) {
-			$payload['errorId'] = $logRecordId;
+			$payload['applicationErrorId'] = $logRecordId;
 		}
 
 		return $payload;
