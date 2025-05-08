@@ -13,7 +13,7 @@ lint:
             -
                 PHP_IMAGE:
                     - registry.gitlab.com/apploud/images/php/8.1-bin
-                    - registry.gitlab.com/apploud/images/php/8.3-bin
+                    - registry.gitlab.com/apploud/images/php/8.4-bin
 
 requirements:
     stage: test
@@ -30,6 +30,7 @@ requirements:
                     - registry.gitlab.com/apploud/images/php/8.1-bin
                     - registry.gitlab.com/apploud/images/php/8.2-bin
                     - registry.gitlab.com/apploud/images/php/8.3-bin
+                    - registry.gitlab.com/apploud/images/php/8.4-bin
                 COMPOSER_ARGS:
                     - ''
                     - '--prefer-lowest'
@@ -48,6 +49,7 @@ phpstan:
                     - registry.gitlab.com/apploud/images/php/8.1-bin
                     - registry.gitlab.com/apploud/images/php/8.2-bin
                     - registry.gitlab.com/apploud/images/php/8.3-bin
+                    - registry.gitlab.com/apploud/images/php/8.4-bin
                 COMPOSER_ARGS:
                     - ''
                     - '--prefer-lowest'
@@ -74,6 +76,7 @@ tests:
                     - registry.gitlab.com/apploud/images/php/8.1-bin
                     - registry.gitlab.com/apploud/images/php/8.2-bin
                     - registry.gitlab.com/apploud/images/php/8.3-bin
+                    - registry.gitlab.com/apploud/images/php/8.4-bin
                 COMPOSER_ARGS:
                     - ''
                     - '--prefer-lowest'
